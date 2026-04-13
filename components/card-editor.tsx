@@ -22,6 +22,7 @@ import ThemeSelector from "@/components/theme-selector"
 import {
   CardData,
   CardLayer,
+  CardTheme,
   FONT_OPTIONS,
   FontChoice,
   IMAGE_BINDINGS,
@@ -44,9 +45,11 @@ interface CardEditorProps {
   selectedLayerId: string | null
   onSelectLayer: (id: string | null) => void
   onChange: (data: CardData) => void
+  applyTheme?: (data: CardData, theme: CardTheme) => CardData
+  activeSide?: "front" | "back"
 }
 
-export default function CardEditor({ data, selectedLayerId, onSelectLayer, onChange }: CardEditorProps) {
+export default function CardEditor({ data, selectedLayerId, onSelectLayer, onChange, applyTheme, activeSide = "front" }: CardEditorProps) {
   const [newTrait, setNewTrait] = useState("")
   const photoInputRef = useRef<HTMLInputElement>(null)
   const emblemInputRef = useRef<HTMLInputElement>(null)
@@ -226,9 +229,14 @@ export default function CardEditor({ data, selectedLayerId, onSelectLayer, onCha
       <div className="rounded-2xl border border-white/40 bg-white/55 p-4 shadow-lg shadow-pink-100/40 backdrop-blur-xl dark:border-white/12 dark:bg-slate-800/95 dark:shadow-none">
         <div className="flex items-center justify-between gap-3">
           <div>
-            <div className="text-sm font-semibold text-foreground">Card Builder Studio</div>
+            <div className="flex items-center gap-2">
+              <div className="text-sm font-semibold text-foreground">Card Builder Studio</div>
+              <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest ${activeSide === "back" ? "bg-violet-500/15 text-violet-600 dark:text-violet-300" : "bg-primary/12 text-primary dark:text-pink-200"}`}>
+                {activeSide === "back" ? "Back" : "Front"}
+              </span>
+            </div>
             <div className="text-xs text-muted-foreground dark:text-slate-300">
-              Drag Elemente direkt im Preview und finetune alles im Inspector.
+              Drag elements in preview · fine-tune here
             </div>
           </div>
           <button
@@ -395,7 +403,7 @@ export default function CardEditor({ data, selectedLayerId, onSelectLayer, onCha
             <div className="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground dark:text-slate-300">Preset Themes</div>
             <ThemeSelector
               value={data.theme}
-              onChange={(theme) => onChange(applyThemePreset(data, theme))}
+              onChange={(theme) => onChange((applyTheme ?? applyThemePreset)(data, theme))}
             />
           </div>
           {watermarkLayer ? (

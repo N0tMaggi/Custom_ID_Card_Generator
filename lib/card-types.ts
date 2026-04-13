@@ -1046,3 +1046,287 @@ export function createLayer(type: LayerType, index = 1): CardLayer {
 }
 
 export const DEFAULT_CARD_DATA = createCardData("pastel")
+
+// ─── Back side template ──────────────────────────────────────────────────────
+
+function createBackThemeLayers(theme: CardTheme): CardLayer[] {
+  const { tokens } = THEME_PRESETS[theme]
+
+  return [
+    shapeLayer({
+      id: "back-magstripe",
+      name: "Magnetic Stripe",
+      shape: "rect",
+      x: 0, y: 0,
+      width: 100, height: 14.8,
+      zIndex: 2,
+      fill: "#111118",
+      stroke: "transparent",
+      strokeWidth: 0,
+      radius: 0,
+    }),
+    shapeLayer({
+      id: "back-sig-panel",
+      name: "Signature Panel",
+      shape: "rect",
+      x: 2, y: 21,
+      width: 64, height: 18,
+      zIndex: 3,
+      fill: "rgba(255,255,255,0.88)",
+      stroke: "rgba(255,255,255,0.5)",
+      strokeWidth: 1,
+      radius: 6,
+    }),
+    shapeLayer({
+      id: "back-hologram",
+      name: "Hologram Badge",
+      shape: "circle",
+      x: 72, y: 17,
+      width: 16, height: 25.6,
+      zIndex: 5,
+      fill: "linear-gradient(135deg, #ff9bc7 0%, #c3b1e1 22%, #91c7ff 44%, #a8f0c0 66%, #ffe580 88%, #ff9bc7 100%)",
+      stroke: "rgba(255,255,255,0.55)",
+      strokeWidth: 1.5,
+      radius: 999,
+      blur: 0,
+    }),
+    textLayer({
+      id: "back-hologram-star",
+      name: "Hologram Star",
+      text: "★",
+      x: 72, y: 27,
+      width: 16, height: 6,
+      zIndex: 6,
+      fontFamily: "space",
+      fontSize: 18,
+      fontWeight: 700,
+      color: "rgba(255,255,255,0.9)",
+      align: "center",
+    }),
+    textLayer({
+      id: "back-signature",
+      name: "Signature",
+      binding: "signature",
+      x: 3, y: 25,
+      width: 36, height: 10,
+      zIndex: 10,
+      fontFamily: "script",
+      fontSize: 26,
+      fontWeight: 700,
+      color: "rgba(20,10,50,0.68)",
+      italic: true,
+    }),
+    textLayer({
+      id: "back-sig-label",
+      name: "Authorized Signature Label",
+      text: "AUTHORIZED SIGNATURE",
+      x: 2.5, y: 39,
+      width: 32, height: 3,
+      zIndex: 10,
+      fontFamily: "space",
+      fontSize: 6.8,
+      fontWeight: 700,
+      letterSpacing: 0.22,
+      color: tokens.secondary,
+      opacity: 0.74,
+      transform: "uppercase",
+    }),
+    textLayer({
+      id: "back-license-label",
+      name: "License Label (Back)",
+      text: "LICENSE NO.",
+      x: 2.5, y: 46.5,
+      width: 22, height: 3,
+      zIndex: 10,
+      fontFamily: "space",
+      fontSize: 7,
+      fontWeight: 700,
+      letterSpacing: 0.24,
+      color: tokens.secondary,
+      opacity: 0.75,
+      transform: "uppercase",
+    }),
+    textLayer({
+      id: "back-license-number",
+      name: "License Number (Back)",
+      binding: "licenseNumber",
+      x: 2.5, y: 50,
+      width: 60, height: 6.5,
+      zIndex: 10,
+      fontFamily: "mono",
+      fontSize: 14,
+      fontWeight: 700,
+      letterSpacing: 0.2,
+      color: tokens.primary,
+      transform: "uppercase",
+    }),
+    fieldLayer({
+      id: "back-valid",
+      name: "Valid Until (Back)",
+      label: "Valid Until",
+      binding: "validUntil",
+      x: 72, y: 45,
+      width: 24, height: 11,
+      zIndex: 10,
+      labelColor: tokens.secondary,
+      valueColor: tokens.tertiary,
+      labelSize: 8,
+      valueSize: 14,
+      fontFamily: "poppins",
+      labelWeight: 700,
+      valueWeight: 700,
+      align: "center",
+    }),
+    textLayer({
+      id: "back-country",
+      name: "Country (Back)",
+      binding: "country",
+      x: 2.5, y: 59,
+      width: 65, height: 4,
+      zIndex: 10,
+      fontFamily: "space",
+      fontSize: 9,
+      fontWeight: 700,
+      letterSpacing: 0.3,
+      color: tokens.secondary,
+      opacity: 0.82,
+      transform: "uppercase",
+    }),
+    textLayer({
+      id: "back-disclaimer",
+      name: "Disclaimer (Back)",
+      binding: "disclaimer",
+      x: 2.5, y: 65,
+      width: 90, height: 5.5,
+      zIndex: 10,
+      fontFamily: "space",
+      fontSize: 8,
+      fontWeight: 500,
+      letterSpacing: 0.04,
+      color: tokens.secondary,
+      opacity: 0.75,
+    }),
+    shapeLayer({
+      id: "back-mrz-bg",
+      name: "MRZ Background",
+      shape: "rect",
+      x: 0, y: 73,
+      width: 100, height: 27,
+      zIndex: 2,
+      fill: "rgba(0,0,0,0.28)",
+      stroke: "transparent",
+      strokeWidth: 0,
+      radius: 0,
+    }),
+    textLayer({
+      id: "back-mrz1",
+      name: "MRZ Line 1",
+      text: "IDCOS<<COSPLAY<<PARODY<<ONLY<<<<<<<<<<<<<<<<",
+      x: 1.5, y: 74.5,
+      width: 97, height: 5.5,
+      zIndex: 10,
+      fontFamily: "mono",
+      fontSize: 10.5,
+      fontWeight: 700,
+      letterSpacing: 0.05,
+      color: tokens.secondary,
+      opacity: 0.8,
+      transform: "uppercase",
+    }),
+    textLayer({
+      id: "back-mrz2",
+      name: "MRZ Line 2",
+      binding: "licenseNumber",
+      x: 1.5, y: 83,
+      width: 97, height: 5.5,
+      zIndex: 10,
+      fontFamily: "mono",
+      fontSize: 10.5,
+      fontWeight: 700,
+      letterSpacing: 0.05,
+      color: tokens.primary,
+      opacity: 0.9,
+      transform: "uppercase",
+    }),
+    textLayer({
+      id: "back-watermark",
+      name: "Watermark (Back)",
+      binding: "watermarkText",
+      text: BASE_CONTENT.watermarkText,
+      x: 11, y: 29,
+      width: 78, height: 18,
+      rotation: -26,
+      zIndex: 1,
+      opacity: 1,
+      fontFamily: "space",
+      fontSize: 34,
+      fontWeight: 700,
+      letterSpacing: 0.14,
+      color: tokens.watermark,
+      align: "center",
+      transform: "uppercase",
+    }),
+  ]
+}
+
+export function createBackCardData(theme: CardTheme = "pastel"): CardData {
+  return {
+    theme,
+    content: { ...BASE_CONTENT },
+    background: { ...THEME_PRESETS[theme].background },
+    layers: createBackThemeLayers(theme),
+  }
+}
+
+export function applyThemePresetToBack(data: CardData, theme: CardTheme): CardData {
+  const themed = createBackCardData(theme)
+  const themedById = new Map(themed.layers.map((layer) => [layer.id, layer]))
+
+  const layers = data.layers.map((layer) => {
+    const fresh = themedById.get(layer.id)
+    if (!fresh || fresh.type !== layer.type) {
+      return layer
+    }
+
+    switch (layer.type) {
+      case "text":
+        return {
+          ...preserveLayerTransform(layer, fresh as TextLayer),
+          text: layer.text,
+          binding: layer.binding,
+        }
+      case "field":
+        return {
+          ...preserveLayerTransform(layer, fresh as FieldLayer),
+          label: layer.label,
+          value: layer.value,
+          binding: layer.binding,
+        }
+      case "image":
+        return {
+          ...preserveLayerTransform(layer, fresh as ImageLayer),
+          src: layer.src,
+          binding: layer.binding,
+        }
+      case "shape":
+        return preserveLayerTransform(layer, fresh as ShapeLayer)
+      case "chips":
+        return {
+          ...preserveLayerTransform(layer, fresh as ChipsLayer),
+          items: layer.items,
+          binding: layer.binding,
+        }
+      default:
+        return layer
+    }
+  }) as CardLayer[]
+
+  return {
+    ...data,
+    theme,
+    background: { ...themed.background },
+    layers,
+  }
+}
+
+export const DEFAULT_BACK_CARD_DATA = createBackCardData("pastel")

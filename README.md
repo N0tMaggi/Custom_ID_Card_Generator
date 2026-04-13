@@ -1,7 +1,7 @@
 # Custom Cosplay ID Card Generator
 
 <p align="center">
-  A polished, client-side card builder for fictional cosplay ID cards with live editing, drag-and-drop layout control, theme customization, PNG export, and print-ready output.
+  A polished, client-side card builder for fictional cosplay ID cards with live editing, drag-and-drop layout control, front &amp; back side design, theme customization, JSON project import/export, PNG export, and print-ready output.
 </p>
 
 <p align="center">
@@ -15,6 +15,8 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Export-PNG%202x-A855F7?style=flat-square" alt="PNG Export" />
   <img src="https://img.shields.io/badge/Print-Credit%20Card%20Size-0F172A?style=flat-square" alt="Print Ready" />
+  <img src="https://img.shields.io/badge/Sides-Front%20%26%20Back-7C3AED?style=flat-square" alt="Front and Back sides" />
+  <img src="https://img.shields.io/badge/Import%2FExport-JSON-22C55E?style=flat-square" alt="JSON Import/Export" />
   <img src="https://img.shields.io/badge/UI-Dark%20%2F%20Light-F472B6?style=flat-square" alt="Dark and Light Mode" />
   <img src="https://img.shields.io/badge/State-Client%20Only-38BDF8?style=flat-square" alt="Client-side only" />
 </p>
@@ -44,10 +46,12 @@ The app is intentionally built for parody and cosplay use only. It includes visi
 ## Why this project
 
 - Fullscreen editing experience with a resizable studio layout
+- **Front and back side** — independent layer stacks, shared content
 - Live preview that updates while the form and inspector change
 - Layer-based customization for text, fields, images, shapes, and chips
 - Direct canvas interaction for selecting and moving elements
 - Theme presets plus manual color tuning
+- **JSON project import and export** for saving and restoring full card designs
 - Reliable PNG export and print flow in credit-card dimensions
 - Modern React architecture with all state handled on the client
 
@@ -67,6 +71,14 @@ The app is intentionally built for parody and cosplay use only. It includes visi
 - Bind layers to content fields or use standalone custom values
 - Control typography, spacing, colors, backgrounds, borders, opacity, and radius settings
 
+### Front & back design
+
+- **Front side** — full layer stack with photo, emblem, fields, traits, signature, watermark
+- **Back side** — pre-built template with magnetic stripe, signature panel, hologram badge, MRZ zone, and license info
+- Both sides share content (name, alias, dates, etc.) and can be designed independently
+- Side switcher in the editor panel and in the preview toolbar
+- Applying a theme preset updates layer colors on the active side
+
 ### Visual customization
 
 - Preset themes: `pastel`, `dark`, and `neon`
@@ -76,8 +88,10 @@ The app is intentionally built for parody and cosplay use only. It includes visi
 
 ### Output
 
-- PNG export at 2x scale
+- PNG export at 2x scale for the active side
 - Print view optimized for `85.6mm x 54mm`
+- **Export project as JSON** to save the full front + back card design
+- **Import project from JSON** to restore a previously saved design
 - Export and print rendering isolated from the main shell for more reliable output
 
 ## Safety note
@@ -148,7 +162,7 @@ styles/                 Additional styling assets
 
 ### `app/page.tsx`
 
-Owns the main studio shell, including layout, theme toggle, zoom controls, preview resizing, PNG export, and print flow.
+Owns the main studio shell, including layout, theme toggle, zoom controls, preview resizing, front/back side switching, content synchronization between sides, JSON import/export, PNG export, and print flow.
 
 ### `components/card-editor.tsx`
 
@@ -160,7 +174,7 @@ Renders the card surface itself and handles interactive layer selection in the l
 
 ### `lib/card-types.ts`
 
-Defines the card data model, themes, layer types, default content, and helper factories used throughout the builder.
+Defines the card data model, themes, layer types, default content, and helper factories used throughout the builder. Includes factories for both the front (`createCardData`) and back (`createBackCardData`) templates, as well as theme appliers for each side.
 
 ## Customization model
 
